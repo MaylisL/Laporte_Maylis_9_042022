@@ -6,7 +6,7 @@ import {fireEvent, screen, waitFor} from "@testing-library/dom"
 import userEvent from '@testing-library/user-event'
 import DashboardFormUI from "../views/DashboardFormUI.js"
 import DashboardUI from "../views/DashboardUI.js"
-import Dashboard, { filteredBills, cards } from "../containers/Dashboard.js"
+import Dashboard, { filteredBills, cards, getStatus } from "../containers/Dashboard.js"
 import { ROUTES, ROUTES_PATH } from "../constants/routes"
 import { localStorageMock } from "../__mocks__/localStorage.js"
 import mockStore from "../__mocks__/store"
@@ -64,9 +64,9 @@ describe('Given I am connected as an Admin', () => {
       })
       document.body.innerHTML = DashboardUI({ data: { bills } })
 
-      const handleShowTickets1 = jest.fn((e) => dashboard.handleShowTickets(e, bills, 1))
-      const handleShowTickets2 = jest.fn((e) => dashboard.handleShowTickets(e, bills, 2))
-      const handleShowTickets3 = jest.fn((e) => dashboard.handleShowTickets(e, bills, 3))
+      const handleShowTickets1 = jest.fn((e) => dashboard.handleShowTickets(e, filteredBills(bills, getStatus(1)), 1))
+      const handleShowTickets2 = jest.fn((e) => dashboard.handleShowTickets(e, filteredBills(bills, getStatus(2)), 2))
+      const handleShowTickets3 = jest.fn((e) => dashboard.handleShowTickets(e, filteredBills(bills, getStatus(3)), 3))
 
       const icon1 = screen.getByTestId('arrow-icon1')
       const icon2 = screen.getByTestId('arrow-icon2')
